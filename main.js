@@ -27,7 +27,7 @@ async function main() {
             instance.payload._id = instance._id // Ensure form rendere knows the instance id
             if(payload.submitbutton != null && payload.submitbutton != ""){
                 // We update the text filed with some random text and set state to idle
-                instance.payload.text = "Send message to test" + payload.submitbutton + " at " + new Date().toISOString();
+                instance.payload.text = "Send message to queue " + payload.submitbutton + " at " + new Date().toISOString();
                 instance.state = "idle"
                 await client.UpdateOne({collectionname: "workflow_instances", item: instance, jwt});
                 // notify web user about the updated state. If wha we do is short lived we could use "processing" state instead.
@@ -47,7 +47,7 @@ async function main() {
                 await client.UpdateOne({collectionname: "workflow_instances", item: instance, jwt});
             } else {
                 if(instance.payload.text == null || instance.payload.text == "") 
-                instance.payload.text = "Hi mom " + new Date().toISOString(); // Update a text filed on the form
+                instance.payload.text = "Random text goes here, at " + new Date().toISOString(); // Update a text filed on the form
                 await client.UpdateOne({collectionname: "workflow_instances", item: instance, jwt});
             }
             // return payload to notify calling web user. We don't use this right now, but maybe at some point we will, to save database round trips.
