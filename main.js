@@ -2,12 +2,14 @@ const { openiap } = require("@openiap/nodeapi");
 async function main() {
     var client = new openiap();
     await client.connect();
+    // Define this as a form workflow, this is what list's this workflow/form under "Form workflows"
     var workflow = {
         queue: "agentworkflow",
         name: "Agent test workflow",
         _type: "workflow",
         web: true, rpa:false
     }
+    // Insert or update the workflow definition, using the queue name as uniqeness. This will ensure that we only have one workflow with this queue name.
     workflow = await client.InsertOrUpdateOne({collectionname: "workflow", item: workflow, uniqeness: "queue"});
     var localqueue = await client.RegisterQueue({ queuename:workflow.queue}, async (msg, payload, user, jwt)=> {
         var instance = {workflow: workflow._id, targetid: user._id, state: "idle", form: "63d3d8ca5f097deb21fb06de", "name": workflow.name, "_type": "instance"};
