@@ -3,6 +3,7 @@ async function main() {
     var client = new openiap();
     await client.connect();
     // Define this as a form workflow, this is what list's this workflow/form under "Form workflows"
+    // you MUST update agentworkflow if testing this toward app.openiap.io 
     var workflow = {
         queue: "agentworkflow",
         name: "Agent test workflow",
